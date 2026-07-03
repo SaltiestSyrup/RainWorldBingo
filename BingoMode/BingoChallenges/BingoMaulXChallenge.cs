@@ -148,12 +148,12 @@ namespace BingoMode.BingoChallenges
 
         public override void AddHooks()
         {
-            On.Creature.Violence += Creature_ViolenceMaulX;
+            On.Player.Update += Player_Update_MaulHookX;
         }
 
         public override void RemoveHooks()
         {
-            On.Creature.Violence -= Creature_ViolenceMaulX;
+            On.Player.Update -= Player_Update_MaulHookX;
         }
 
         public override List<object> Settings() => [amount];

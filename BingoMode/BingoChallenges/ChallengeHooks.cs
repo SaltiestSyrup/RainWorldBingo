@@ -516,31 +516,51 @@ namespace BingoMode.BingoChallenges
             }
         }
 
-        public static void Creature_ViolenceMaulX(On.Creature.orig_Violence orig, Creature self, BodyChunk source, Vector2? directionAndMomentum, BodyChunk hitChunk, PhysicalObject.Appendage.Pos hitAppendage, Creature.DamageType type, float damage, float stunBonus)
+        public static void Player_Update_MaulHookX(On.Player.orig_Update orig, Player self, bool eu)
         {
-            orig(self, source, directionAndMomentum, hitChunk, hitAppendage, type, damage, stunBonus);
-            if (source?.owner is Player && type == Creature.DamageType.Bite)
+            orig(self, eu);
+            if (SlugcatStats.SlugcatCanMaul(self.SlugCatClass) && self.stun < 1 && !self.dead && self.enteringShortCut == null && !self.inShortcut)
             {
-                for (int j = 0; j < ExpeditionData.challengeList.Count; j++)
+                for (int i = 0; i < self.grasps.Length; i++)
                 {
-                    if (ExpeditionData.challengeList[j] is BingoMaulXChallenge c)
+                    if (self.input[0].pckp && self.grasps[i] != null
+                        && self.grasps[i].grabbed is Creature && !(self.grasps[i].grabbed as Creature).dead
+                        && self.CanMaulCreature(self.grasps[i].grabbed as Creature)
+                        && self.maulTimer == 39)
                     {
-                        c.Maul();
+                        for (int j = 0; j < ExpeditionData.challengeList.Count; j++)
+                        {
+                            if (ExpeditionData.challengeList[j] is BingoMaulXChallenge c)
+                            {
+                                c.Maul();
+                            }
+                        }
                     }
                 }
             }
         }
 
-        public static void Creature_ViolenceMaulType(On.Creature.orig_Violence orig, Creature self, BodyChunk source, Vector2? directionAndMomentum, BodyChunk hitChunk, PhysicalObject.Appendage.Pos hitAppendage, Creature.DamageType type, float damage, float stunBonus)
+        
+        
+        public static void Player_Update_MaulHookTypes(On.Player.orig_Update orig, Player self, bool eu)
         {
-            orig(self, source, directionAndMomentum, hitChunk, hitAppendage, type, damage, stunBonus);
-            if (source?.owner is Player && type == Creature.DamageType.Bite)
+            orig(self, eu);
+            if (SlugcatStats.SlugcatCanMaul(self.SlugCatClass) && self.stun < 1 && !self.dead && self.enteringShortCut == null && !self.inShortcut)
             {
-                for (int j = 0; j < ExpeditionData.challengeList.Count; j++)
+                for (int i = 0; i < self.grasps.Length; i++)
                 {
-                    if (ExpeditionData.challengeList[j] is BingoMaulTypesChallenge c)
+                    if (self.input[0].pckp && self.grasps[i] != null
+                        && self.grasps[i].grabbed is Creature && !(self.grasps[i].grabbed as Creature).dead
+                        && self.CanMaulCreature(self.grasps[i].grabbed as Creature)
+                        && self.maulTimer == 39)
                     {
-                        c.Maul(self.Template.type.value);
+                        for (int j = 0; j < ExpeditionData.challengeList.Count; j++)
+                        {
+                            if (ExpeditionData.challengeList[j] is BingoMaulTypesChallenge c)
+                            {
+                                c.Maul((self.grasps[i].grabbed as Creature).Template.type.value);
+                            }
+                        }
                     }
                 }
             }

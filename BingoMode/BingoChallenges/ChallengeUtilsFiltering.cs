@@ -223,6 +223,7 @@ namespace BingoMode.BingoChallenges
                     string[] mscFriends = { "EelLizard", "SpitLizard" };
                     string[] watcherFriends = { "PeachLizard", "IndigoLizard", "BlizzardLizard", "BasiliskLizard" };
                     string[] saintFriends = { "ZoopLizard" };
+                    string[] saintForbid = { "Salamander" };
 
                     SlugName tempSlug = (mode == BingoModifier.WatcherMode) ? watchername : slug;
 
@@ -231,6 +232,8 @@ namespace BingoMode.BingoChallenges
                     if (tempSlug != watchername) mutableBase = mutableBase.Where(x => !watcherFriends.Contains(x)).ToList();
 
                     if (!ModManager.MSC) mutableBase = mutableBase.Where(x => !mscFriends.Contains(x) || tempSlug == saintname || tempSlug == watchername).ToList();
+
+                    if (tempSlug == saintname) mutableBase = mutableBase.Where(x => !saintForbid.Contains(x)).ToList();
 
                     return mutableBase.ToArray();
 
