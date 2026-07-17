@@ -477,10 +477,12 @@ namespace BingoMode.BingoChallenges
                     string[] exclusions = { "Gourmand", "Survivor" };
                     string[] nonHunterForbidPassages = { "Mother" };
                     string[] watcherForbidPassages = { "Nomad", "Pilgrim", "Traveller" };
+                    string[] saintForbidPassages = { "Scholar" };
                     SlugName tempSlug = (mode == BingoModifier.WatcherMode) ? watchername : slug;
                     mutableBase = mutableBase.Where(x => !exclusions.Contains(x)).ToList();
 
                     if (tempSlug == watchername) mutableBase = mutableBase.Where(x => !watcherForbidPassages.Contains(x)).ToList();
+                    if (slug == saintname) mutableBase = mutableBase.Where(x => !saintForbidPassages.Contains(x)).ToList();
                     if (BingoData.WatcherMode ? ExpeditionData.slugcatPlayer != huntername : tempSlug != huntername) mutableBase = mutableBase.Where(x => !nonHunterForbidPassages.Contains(x)).ToList();
 
                     return mutableBase.ToArray();
