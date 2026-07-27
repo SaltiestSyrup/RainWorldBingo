@@ -647,6 +647,11 @@ namespace BingoMode.BingoSteamworks
         {
             if (CurrentLobby == default) return;
 
+            // check if host sent board refresh update
+            if (SteamMatchmaking.GetLobbyOwner(CurrentLobby) != selfIdentity.GetSteamID())
+            {
+                return;
+            }
             try
             {
                 string asfgas = BingoHooks.GlobalBoard.ToString().Replace(';', ':');
