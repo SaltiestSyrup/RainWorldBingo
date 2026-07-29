@@ -313,6 +313,7 @@ namespace BingoMode
                     if (BingoData.BingoMode)
                     {
                         FTScreen.manager.menuSetup.startGameCondition = ProcessManager.MenuSetup.StoryGameInitCondition.Load;
+                        ExpeditionData.earnedPassages++; // muy important
                         return ProcessManager.ProcessID.Game;
                     }
                     return orig;
